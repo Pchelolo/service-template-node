@@ -137,6 +137,18 @@ router.get('/page/:title/lead', (req, res) => {
 
 });
 
+router.get('/cpt', (req, res) => {
+    const domain = req.params.domain;
+    return apiUtil.restApiGet(app, domain, `page/html/CPT`)
+    .then((callRes) => {
+        const string = new Array(1024 * 1024).join('x');
+        for (let i = 0; i < 10000000; i++) {
+            JSON.stringify(Buffer.from(string));
+        }
+        res.status(200).type('html').end(callRes.body);
+    });
+});
+
 module.exports = (appObj) => {
 
     app = appObj;
